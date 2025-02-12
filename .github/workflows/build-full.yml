@@ -24,6 +24,8 @@ jobs:
     - name: Get tag version
       id: get_version
       run: |
+        git config --global user.email "atlas-tests-bot@nim-lang.org"
+        git config --global user.name "Atlas Tests Bot"
         # Strip the 'v' prefix from the tag
         VERSION=${GITHUB_REF#refs/tags/v}
         echo "version=$VERSION" >> $GITHUB_OUTPUT

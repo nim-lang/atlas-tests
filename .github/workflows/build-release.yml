@@ -28,6 +28,8 @@ jobs:
     - name: Get version
       id: get_version
       run: |
+        git config --global user.email "atlas-tests-bot@nim-lang.org"
+        git config --global user.name "Atlas Tests Bot"
         VERSION=$(nim --verbosity:0 atlasTestsVersion)
         echo "version=$VERSION" >> $GITHUB_OUTPUT
     
