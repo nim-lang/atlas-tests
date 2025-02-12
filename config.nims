@@ -19,3 +19,12 @@ task cleanDist, "Clean all":
   for item in walkDir("."):
     if item.kind == pcFile and item.path.endsWith(".zip"):
       rmFile(item.path)
+
+task atlasTestsVersion, "Get version":
+  let nimble = readFile("atlas_tests.nimble")
+  var ver = ""
+  for line in nimble.split("\n"):
+    if line.startsWith("version ="):
+      ver = line.replace("\"", "").split("=")[1].strip()
+  doAssert ver != "" and " " notin ver and ver.len() < 10, "need to provide atlas version"
+  echo ver
