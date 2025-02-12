@@ -1,11 +1,7 @@
-
 on:
   push:
-    branches:
-    - "main"
-  pull_request:
-    branches:
-    - "*"
+    tags:
+      - '**' # Triggers on version tags
 
 jobs:
   tests:
@@ -25,20 +21,27 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Get version
+    - name: Get tag version
       id: get_version
       run: |
         git config --global user.email "atlas-tests-bot@nim-lang.org"
         git config --global user.name "Atlas Tests Bot"
-        VERSION=$(nim --verbosity:0 atlasTestsVersion)
+        # Strip the 'v' prefix from the tag
+        VERSION=${GITHUB_REF#refs/tags/v}
         echo "version=$VERSION" >> $GITHUB_OUTPUT
-    
+
     - name: Build Tests
       run: |
-        nim --verbosity:0 atlasTestsVersion
         nim atlasTestsCreate
 
-    - uses: actions/upload-artifact@v4
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
       with:
-        name: atlas-tests
-        path: atlas-tests.zip
+        name: Release ${{ steps.get_version.outputs.version }}
+        tag_name: v${{ steps.get_version.outputs.version }}
+        draft: false
+        prerelease: false
+        generate_release_notes: true
+        files: atlas-tests.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
