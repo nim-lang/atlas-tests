@@ -12,8 +12,13 @@ task atlasTestsCreate, "Create a atlas-tests zipped cache":
 task atlasTestsSetup, "Setup atlas-tests from a cached zip":
   exec "nim c -r downloadTestRepos"
 
+task clean, "Clean all":
+  rmDir("atlas-tests/ws_generated")
+  rmDir("atlas-tests/ws_integration")
+
 task cleanDist, "Clean all":
-  rmDir("atlas-tests")
+  rmDir("atlas-tests/working")
+  rmDir("atlas-tests/working")
   mkDir("atlas-tests")
   writeFile("atlas-tests/.gitkeep", "")
   for item in walkDir("."):

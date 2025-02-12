@@ -7,6 +7,5 @@ import downloadTestRepos
 runWsGenerated()
 runWsIntegration()
 
-withDir "atlas-tests":
-  let zipfile = "atlas-tests.zip"
-  exec "zip -ru $1 ws_generated/ ws_integration/" % [zipfile]
+let zipfile = "atlas-tests.zip"
+exec "zip -ru $1 atlas-tests/ws_generated/ atlas-tests/ws_integration/" % [zipfile]
