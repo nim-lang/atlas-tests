@@ -18,6 +18,7 @@ proc setupWsIntegration() =
           moveFile "hooks"/"post-update.sample", "hooks"/"post-update"
           setFilePermissions("hooks"/"post-update", getFilePermissions("hooks"/"post-update") + {fpUserExec})
           exec "git update-server-info"
+          exec &"echo {name}.git `git rev-parse HEAD` >> ../manifest.txt"
 
 proc runWsIntegration*() =
   withDir("atlas-tests"):

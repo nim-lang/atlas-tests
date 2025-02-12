@@ -13,9 +13,9 @@ task atlasTestsSetup, "Setup atlas-tests from a cached zip":
   exec "nim c -r downloadTestRepos"
 
 task cleanDist, "Clean all":
-  rmDir("working")
-  rmDir("ws_generated")
-  rmDir("ws_integration")
+  rmDir("atlas-tests")
+  mkDir("atlas-tests")
+  writeFile("atlas-tests/.gitkeep", "")
   for item in walkDir("."):
     if item.kind == pcFile and item.path.endsWith(".zip"):
       rmFile(item.path)
