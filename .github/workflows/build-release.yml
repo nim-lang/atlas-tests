@@ -1,0 +1,42 @@
+
+on:
+  push:
+    branches:
+    - "main"
+  pull_request:
+    branches:
+    - "*"
+
+jobs:
+  tests:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        nimversion:
+          - '2.x'
+        os:
+          - ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: iffy/install-nim@v4
+      with:
+        version: ${{ matrix.nimversion }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Get version
+      id: get_version
+      run: |
+        VERSION=$(nim --verbosity:0 atlasTestsVersion)
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+    
+    - name: Build Tests
+      run: |
+        nim --verbosity:0 atlasTestsVersion
+        nim atlasTestsCreate
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: atlas-tests
+        path: atlas-tests.zip
