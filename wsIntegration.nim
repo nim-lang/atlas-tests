@@ -20,7 +20,7 @@ proc setupWsIntegration() =
           exec "git update-server-info"
 
 proc runWsIntegration*() =
-  withDir("test-repos"):
+  withDir("atlas-tests"):
     # removeDir("ws_integration")
     createDir "ws_integration"
     withDir("ws_integration"):

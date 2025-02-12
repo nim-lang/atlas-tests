@@ -14,6 +14,6 @@ for line in nimble.split("\n"):
     ver = line.replace("\"", "").split("=")[1].strip()
 doAssert ver != "" and " " notin ver and ver.len() < 10, "need to provide atlas version"
 
-withDir "test-repos":
-  let zipfile = "test-repos-$1.zip" % [ver]
+withDir "atlas-tests":
+  let zipfile = "atlas-tests-$1.zip" % [ver]
   exec "zip -ru $1 ws_generated/ ws_integration/" % [zipfile]

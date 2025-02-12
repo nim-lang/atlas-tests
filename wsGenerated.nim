@@ -99,7 +99,7 @@ proc buildGraphNoGitTags* =
       exec "git commit -m " & quoteShell("broken version of package D")
 
 proc runWsGenerated*() =
-  withDir("test-repos"):
+  withDir("atlas-tests"):
     removeDir("working")
     createDir "working"
     withDir("working"):
