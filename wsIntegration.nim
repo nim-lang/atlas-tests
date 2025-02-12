@@ -38,6 +38,9 @@ proc runWsIntegration*() =
         repos.add(repo)
 
 proc getRepoUrls(): seq[string] =
+  ## these were gathered after running `--full --keepWorkspace use https://github.com/zedeus/nitter`
+  ## the urls should be cleaned up, e.g. remove `.git` at the ends
+  ## the `githttpserver` will handle routing `.git` urls during the test runs
   let repos = dedent"""
   https://github.com/timotheecour/asynctools
   https://github.com/disruptek/bump
