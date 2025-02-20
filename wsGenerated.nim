@@ -184,8 +184,11 @@ proc runWsGenerated*() =
             setFilePermissions("hooks"/"post-update", getFilePermissions("hooks"/"post-update") + {fpUserExec})
             exec "git update-server-info"
             exec &"echo {repo.org}/{repo.name}.git `git rev-parse HEAD` >> ../../ws_generated-manifest.txt"
-            exec &"echo ===== {repo.org}/{repo.name}.git ===== >> ../../ws_generated-logs.txt"
+            exec &"echo ============================================== >> ../../ws_generated-logs.txt"
+            exec &"echo {repo.org}/{repo.name}.git >> ../../ws_generated-logs.txt"
+            exec &"echo ============================================== '\\n' >> ../../ws_generated-logs.txt"
             exec &"git log >> ../../ws_generated-logs.txt"
+            exec "echo '\\n\\n' >> ../../ws_generated-logs.txt"
 
 when isMainModule:
   runWsGenerated()
