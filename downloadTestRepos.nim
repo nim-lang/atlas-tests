@@ -7,8 +7,8 @@ proc exec*(cmd: string) =
 template withDir*(dir: string; body: untyped) =
   let old = getCurrentDir()
   try:
-    setCurrentDir(dir)
     echo "WITHDIR: ", dir, " at: ", getCurrentDir()
+    setCurrentDir(dir)
     body
   finally:
     setCurrentDir(old)
