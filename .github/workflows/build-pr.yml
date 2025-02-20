@@ -40,5 +40,5 @@ jobs:
 
     - uses: actions/upload-artifact@v4
       with:
-        name: atlas-tests.zip
+        name: atlas-tests
         path: atlas-tests.zip
