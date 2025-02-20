@@ -1,5 +1,5 @@
 # Package
-version = "0.1.1"
+version = "0.1.2"
 description = "Atlas persistent tests. This file is mostly for versioning."
 license = "MIT"
 srcDir = "."

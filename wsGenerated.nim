@@ -9,10 +9,20 @@ proc buildGraph* =
     createDir "proj_a"
     withDir "proj_a":
       exec "git init"
+
       writeFile "proj_a.nimble", "requires \"proj_b >= 1.0.0\"\n"
       exec "git add proj_a.nimble"
       exec "git commit -m 'update'"
       exec "git tag v1.0.0"
+
+      writeFile "proj_a.nim", "echo \"hello world\"\n"
+      exec "git add proj_a.nim"
+      exec "git commit -m 'add nim file'"
+
+      writeFile "proj_a.nimble", "requires \"proj_b >= 1.0.0\"\n# comment\n"
+      exec "git add proj_a.nimble"
+      exec "git commit -m 'update'"
+
       writeFile "proj_a.nimble", "requires \"proj_b >= 1.1.0\"\n"
       exec "git add proj_a.nimble"
       exec "git commit -m 'update'"
@@ -21,10 +31,19 @@ proc buildGraph* =
     createDir "proj_b"
     withDir "proj_b":
       exec "git init"
+
+      writeFile "proj_b.nim", "echo \"hello world\"\n"
+      exec "git add proj_b.nim"
+      exec "git commit -m 'add nim file'"
+
       writeFile "proj_b.nimble", "requires \"proj_c >= 1.0.0\"\n"
       exec "git add proj_b.nimble"
       exec "git commit -m " & quoteShell("Initial commit for project B")
       exec "git tag v1.0.0"
+
+      writeFile "proj_b.nimble", "requires \"proj_c >= 1.0.0\"\n# comment\n"
+      exec "git add proj_b.nimble"
+      exec "git commit -m " & quoteShell("Update Nimble comment for project B")
 
       writeFile "proj_b.nimble", "requires \"proj_c >= 1.1.0\"\n"
       exec "git add proj_b.nimble"
@@ -34,9 +53,11 @@ proc buildGraph* =
     createDir "proj_c"
     withDir "proj_c":
       exec "git init"
+
       writeFile "proj_c.nimble", "requires \"proj_d >= 1.2.0\"\n"
       exec "git add proj_c.nimble"
       exec "git commit -m " & quoteShell("Initial commit for project C")
+
       writeFile "proj_c.nimble", "requires \"proj_d >= 1.0.0\"\n"
       exec "git commit -am " & quoteShell("Update proj_c.nimble for project C")
       exec "git tag v1.2.0"
@@ -44,10 +65,12 @@ proc buildGraph* =
     createDir "proj_d"
     withDir "proj_d":
       exec "git init"
+
       writeFile "proj_d.nimble", "\n"
       exec "git add proj_d.nimble"
       exec "git commit -m " & quoteShell("Initial commit for project D")
       exec "git tag v1.0.0"
+
       writeFile "proj_d.nimble", "requires \"does_not_exist >= 1.2.0\"\n"
       exec "git add proj_d.nimble"
       exec "git commit -m " & quoteShell("broken version of package D")
@@ -61,9 +84,19 @@ proc buildGraphNoGitTags* =
     createDir "proj_a"
     withDir "proj_a":
       exec "git init"
+
       writeFile "proj_a.nimble", "version = \"1.0.0\"\n\nrequires \"proj_b >= 1.0.0\"\n"
       exec "git add proj_a.nimble"
       exec "git commit -m 'update'"
+
+      writeFile "proj_a.nimble", "version = \"1.0.0\"\n\nrequires \"proj_b >= 1.0.0\"\n# comments\n"
+      exec "git add proj_a.nimble"
+      exec "git commit -m 'update nimble comment'"
+
+      writeFile "proj_a.nim", "echo \"hello world\"\n"
+      exec "git add proj_a.nim"
+      exec "git commit -m 'add nim file'"
+
       writeFile "proj_a.nimble", "version = \"1.1.0\"\n\nrequires \"proj_b >= 1.1.0\"\n"
       exec "git add proj_a.nimble"
       exec "git commit -m 'update'"
@@ -71,9 +104,18 @@ proc buildGraphNoGitTags* =
     createDir "proj_b"
     withDir "proj_b":
       exec "git init"
+
+      writeFile "proj_b.nim", "echo \"hello world\"\n"
+      exec "git add proj_b.nim"
+      exec "git commit -m 'add nim file'"
+
       writeFile "proj_b.nimble", "version = \"1.0.0\"\n\nrequires \"proj_c >= 1.0.0\"\n"
       exec "git add proj_b.nimble"
       exec "git commit -m " & quoteShell("Initial commit for project B")
+
+      writeFile "proj_b.nimble", "version = \"1.0.0\"\n\nrequires \"proj_c >= 1.0.0\"\n# comment\n"
+      exec "git add proj_b.nimble"
+      exec "git commit -m " & quoteShell("Update nimble comment")
 
       writeFile "proj_b.nimble", "version = \"1.1.0\"\n\nrequires \"proj_c >= 1.1.0\"\n"
       exec "git add proj_b.nimble"
@@ -82,18 +124,22 @@ proc buildGraphNoGitTags* =
     createDir "proj_c"
     withDir "proj_c":
       exec "git init"
+
       writeFile "proj_c.nimble", "version = \"1.0.0\"\n\nrequires \"proj_d >= 1.2.0\"\n"
       exec "git add proj_c.nimble"
       exec "git commit -m " & quoteShell("Initial commit for project C")
+
       writeFile "proj_c.nimble", "version = \"1.2.0\"\n\nrequires \"proj_d >= 1.0.0\"\n"
       exec "git commit -am " & quoteShell("Update proj_c.nimble for project C")
 
     createDir "proj_d"
     withDir "proj_d":
       exec "git init"
+
       writeFile "proj_d.nimble", "version = \"1.0.0\"\n\n"
       exec "git add proj_d.nimble"
       exec "git commit -m " & quoteShell("Initial commit for project D")
+
       writeFile "proj_d.nimble", "version = \"2.0.0\"\n\nrequires \"does_not_exist >= 1.2.0\"\n"
       exec "git add proj_d.nimble"
       exec "git commit -m " & quoteShell("broken version of package D")
