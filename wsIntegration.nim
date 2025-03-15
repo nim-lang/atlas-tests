@@ -80,6 +80,7 @@ proc getRepoUrls(): seq[string] =
   https://github.com/narimiran/sorta
   https://github.com/nim-lang/checksums
   https://github.com/nim-lang/fusion
+  https://github.com/nim-lang/packages
   https://github.com/nim-lang/redis
   https://github.com/nim-works/arc
   https://github.com/nim-works/cps
